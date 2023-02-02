@@ -57,7 +57,11 @@ public class BasicItemController {
         item.setItemName(itemName);
         item.setPrice(price);
         item.setQuantity(quantity);
-        return "xxx";
+
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+        return "basic/item";
     }
 
 }
