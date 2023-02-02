@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,8 +49,8 @@ public class BasicItemController {
         return "basic/addForm";
     }
 
-    @PostMapping("/add")
-    public String save(@RequestParam String itemName,
+    // @PostMapping("/add")
+    public String addItemV1(@RequestParam String itemName,
             @RequestParam int price,
             @RequestParam Integer quantity,
             Model model) {
@@ -61,6 +62,21 @@ public class BasicItemController {
         itemRepository.save(item);
 
         model.addAttribute("item", item);
+        return "basic/item";
+    }
+
+    /*
+     * @ModelAttribute 역할
+     * 1. Item 객체 생성 후 setter 로 값 입력
+     * 2. model.addAttribute("item", item) 수행
+     * 첫번째 인자의 "item" 이 @ModelAttribute("item") 의 "item"
+     */
+    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item, Model model) {
+
+        itemRepository.save(item);
+        // model.addAttribute("item", item);
+
         return "basic/item";
     }
 
