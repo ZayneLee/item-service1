@@ -71,8 +71,22 @@ public class BasicItemController {
      * 2. model.addAttribute("item", item) 수행
      * 첫번째 인자의 "item" 이 @ModelAttribute("item") 의 "item"
      */
+    // @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item) {
+
+        itemRepository.save(item);
+        // model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+    /*
+     * @ModelAttribute 의 값 생략시
+     * 클래스 이름의 첫글자를 소문자로 치환한 값이 자동 입력
+     * ex) Item => item , HelloData => helloData
+     */
     @PostMapping("/add")
-    public String addItemV2(@ModelAttribute("item") Item item, Model model) {
+    public String addItemV3(@ModelAttribute Item item) {
 
         itemRepository.save(item);
         // model.addAttribute("item", item);
