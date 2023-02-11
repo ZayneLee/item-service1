@@ -85,13 +85,37 @@ public class BasicItemController {
      * 클래스 이름의 첫글자를 소문자로 치환한 값이 자동 입력
      * ex) Item => item , HelloData => helloData
      */
-    @PostMapping("/add")
+    // @PostMapping("/add")
     public String addItemV3(@ModelAttribute Item item) {
 
         itemRepository.save(item);
         // model.addAttribute("item", item);
 
         return "basic/item";
+    }
+
+    /*
+     * 매개변수가 객체일 경우 @ModelAttribute 까지 생략 가능
+     */
+    // @PostMapping("/add")
+    public String addItemV4(Item item) {
+
+        itemRepository.save(item);
+        // model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+    /*
+     * PRG : Post -> Redirect -> Get 형식으로 변경
+     * 새로고침 시 Post 중복 방지
+     */
+    @PostMapping("/add")
+    public String addItemV5(Item item) {
+
+        itemRepository.save(item);
+
+        return "redirect:/basic/items/" + item.getId();
     }
 
     @GetMapping("/{itemId}/edit")
